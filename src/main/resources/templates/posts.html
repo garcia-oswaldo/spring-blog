@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+
+    <title>Show all</title>
+</head>
+<body>
+
+<h1>Hello</h1>
+<div th:each="post:${posts}">
+  <h3 th:text="${post.id}">title</h3>
+  <h3 th:text="${post.title}">title</h3>
+  <h3 th:text="${post.description}">title</h3>
+  <p>Owner: <span th:text="${post.owner.username}" ></span></p>
+</div>
+
+
+
+</body>
+</html>
