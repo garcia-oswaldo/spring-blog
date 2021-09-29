@@ -6,15 +6,15 @@
 </head>
 <body>
 
-<form action="/create" method="post">
+<form th:action="@{/create}" th:method="post" th:object="${post}">
   <div class="imgcontainer">
     <img src="img_avatar2.png" alt="Avatar" class="avatar">
   </div>
 
   <div class="container">
-
-    <input type="text" placeholder="Enter Title" name="title" id="${title}">
-    <input type="text" placeholder="Enter Description" name="description" id="${description}">
+<!--      <input type="hidden" th:field="*{id}">-->
+      <input type="text" placeholder="Enter Title" th:field="*{title}">
+    <input type="text" placeholder="Enter Description"  th:field="*{description}">
 
     <button type="submit">Submit</button>
   </div>

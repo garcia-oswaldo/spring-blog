@@ -6,7 +6,15 @@
 </head>
 <body>
 
-<form action="/templates/edit.html" method="post">
+<form th:action="@{/posts/edit/{id}" th:method="post" th:object="${postToEdit}">
+  <div class="container">
+<!--    Exposes id in the form and user can change id">-->
+<!--    <input type="hidden" th:field="*{id}">-->
+    <input type="text" placeholder="Enter Title" th:field="*{title}">
+    <input type="text" placeholder="Enter Description"  th:field="*{description}">
+
+    <button type="submit">Submit</button>
+  </div>
 
 </form>
 

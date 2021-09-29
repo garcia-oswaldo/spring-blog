@@ -9,8 +9,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
+    private String password;
+    @Column(nullable = false)
+    private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<Post> posts;
 
     public User(String username, String password) {
         this.username = username;
@@ -58,9 +65,11 @@ public class User {
         this.password = password;
     }
 
-    @Column (nullable = false)
-    private String password;
+    public String getEmail() {
+        return email;
+    }
 
-    @OneToMany(cascade=CascadeType.ALL,mappedBy = "owner")
-    private List<Post> posts;
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
