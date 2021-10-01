@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+  <meta charset="UTF-8">
 
     <title>Show all</title>
 </head>
@@ -15,10 +15,19 @@
   <h3 th:text="${post.description}">title</h3>
   <p>Owner: <span th:text="${post.owner.username}" ></span></p>
   <p><a th:href="@{|/post/edit/${post.id}|}">EDIT</a> </p>
-
+  <form th:action="@{|/post/delete/${post.getId()}|}" th:method="post" >
+    <button type="submit">Delete</button>
+  </form>
+  <p><a th:href="@{/create}">CREATE</a> </p>
 </div>
 
 
+<div sec:authorize="isAuthenticated()">
+  This content is only shown to authenticated users.
 
+  User ID: <span th:text="${#authentication.principal.id}"/>
+  Username: <span th:text="${#authentication.principal.username}"/>
+  Email: <span th:text="${#authentication.principal.email}"/>
+</div>
 </body>
 </html>
