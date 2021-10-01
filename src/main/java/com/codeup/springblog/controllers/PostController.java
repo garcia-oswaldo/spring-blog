@@ -5,6 +5,7 @@ import com.codeup.springblog.models.User;
 import com.codeup.springblog.repos.PostRepository;
 import com.codeup.springblog.repos.UserRepository;
 import com.codeup.springblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,9 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     @ResponseBody
-    public String showOnePost(@PathVariable int id) {
-        return "view an individual post by id of" + id;
+    public String showOnePost(@PathVariable long id, Model model) {
+        Post post =postDao.getById(id);
+        return "post/show";
     }
 
     @GetMapping("/create")
@@ -43,20 +45,33 @@ public class PostController {
     }
 
 @GetMapping("/post/edit/{id}")
-public String showEditPostForm(@PathVariable long id, Model model){
+public String viewEditForm(@PathVariable long id, Model model){
         Post postToEdit=postDao.getById(id);
         model.addAttribute("postToEdit", postToEdit);
-                return "redirect:/posts";
-//@PostMapping("/post/edit/{id}")
+                return "edit";
 }
+    @PostMapping("/post/edit/{id}")
+        public String editPost(@PathVariable long id, @ModelAttribute Post postToEdit)
+    {
+//            Post post= postDao.getById(id);
+//            post.setTitle(postToEdit.getTitle());
+//            post.setDescription(postToEdit.getDescription());
+        User currentLoggedInUser=(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        postToEdit.setOwner(currentLoggedInUser);
+            postToEdit.setId(id);
+            postDao.save(postToEdit);
+         return "redirect:/posts";
+        }
+
 
     @PostMapping("/create")
     public String createPost(@ModelAttribute Post postToSubmit) {
-//        User userToDisplay = userDao.getByUsername("ogarcia");
-// add user owner to the post
-        postToSubmit.setOwner(userDao.getById(1L));
-        emailService.prepareAndSend(postToSubmit, "newPost","You created a new Post");
+        User currentLoggedInUser=(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        postToSubmit.setOwner(currentLoggedInUser);
         postDao.save(postToSubmit);
+
+        emailService.prepareAndSend(postToSubmit, "newPost","You created a new Post");
+
         return "redirect:/posts";
     }
 

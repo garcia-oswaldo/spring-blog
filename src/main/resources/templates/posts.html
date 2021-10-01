@@ -6,14 +6,15 @@
     <title>Show all</title>
 </head>
 <body>
-
+<nav th:replace="/navbar:: navbar">
+</nav>
 <h1>Hello</h1>
 <div th:each="post:${posts}">
   <h3 th:text="${post.id}">title</h3>
   <h3 th:text="${post.title}">title</h3>
   <h3 th:text="${post.description}">title</h3>
   <p>Owner: <span th:text="${post.owner.username}" ></span></p>
-  <p><a href="post/edit/{id}">EDIT</a> </p>
+  <p><a th:href="@{|/post/edit/${post.id}|}">EDIT</a> </p>
 
 </div>
 

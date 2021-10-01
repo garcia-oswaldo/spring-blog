@@ -5,8 +5,9 @@
   <title>Edit</title>
 </head>
 <body>
-
-<form th:action="@{/posts/edit/{id}" th:method="post" th:object="${postToEdit}">
+<nav th:replace="/navbar:: navbar">
+</nav>
+<form th:action="@{|/post/edit/${postToEdit.getId()}|}" th:method="post" th:object="${postToEdit}">
   <div class="container">
 <!--    Exposes id in the form and user can change id">-->
 <!--    <input type="hidden" th:field="*{id}">-->

@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-
+<nav th:replace="/navbar:: navbar">
+</nav>
 <form th:action="@{/create}" th:method="post" th:object="${post}">
   <div class="imgcontainer">
     <img src="img_avatar2.png" alt="Avatar" class="avatar">
